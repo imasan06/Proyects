@@ -1,0 +1,31 @@
+@media (max-width: 767px) {
+  /* Target the div inside the first Link which is a direct child of the grid */
+  .grid.grid-cols-1.md\:grid-cols-2 > a:first-child > div {
+    width: 100%; /* Make it full width on mobile */
+    height: auto; /* Adjust height based on content */
+  }
+
+  .grid.grid-cols-1.md\:grid-cols-2 > a:first-child > div a {
+    height: 200px; /* Fixed height for the image container in Shooting section - adjust if needed */
+  }
+
+  .mobile-stack {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sub-mobile-stack {
+    grid-template-columns: 1fr; /* Stack to one column on mobile */
+  }
+
+  .space-y-7.mobile-stack > * + * {
+    margin-top: 24px; /* Spacing between stacked elements in mobile-stack */
+  }
+
+  .font-light.w-1\/2.text-white.text-4xl.md\:text-5xl.absolute.lg\:text-6xl.mb-8.top-2\/3 {
+    position: static; /* Make title static on mobile */
+    width: 100%; /* Full width for title on mobile */
+    text-align: center; /* Center title on mobile */
+    margin-bottom: 24px; /* Add margin below title */
+  }
+}

@@ -1,0 +1,67 @@
+
+
+.accuracy-container {
+   
+    @apply flex w-full justify-center px-4 md:px-0 md:pt-1;
+   /* Added padding for mobile and desktop horizontal centering */
+  }
+  
+  .accuracy-card {
+    @apply w-full p-6 space-y-6 max-w-lg md:max-w-2xl; /* Full width on mobile, max width on larger screens */
+  }
+  
+  .accuracy-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4; /* Stack inputs on mobile, side-by-side on medium and up */
+  }
+  
+  .accuracy-input-group {
+    @apply space-y-2;
+  }
+  
+  .accuracy-label {
+    @apply block text-sm font-bold text-gray-700; /* Corrected @apply here! Removed redundant accuracy-label */
+  }
+  
+  .accuracy-input {
+    @apply block w-full  px-3 py-2 border border-[#A09B9B] rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg; /* Adjusted input text size and general input styling */
+  }
+  
+  .accuracy-result-group {
+    @apply space-y-2;
+  }
+  
+  .accuracy-result-relative {
+    @apply relative;
+  }
+  
+  .accuracy-output {
+    @apply text-lg pr-20 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-[#D9D9D9] cursor-not-allowed; /* Output input styling, background for readonly */
+  }
+  
+  .accuracy-total-shots {
+    @apply absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-gray-500; /* Total shots positioning and text style */
+  }
+  
+  
+  /* Responsive adjustments for smaller screens (mobile) - optional, already quite responsive */
+  @media (max-width: 767px) {
+    .accuracy-card {
+      @apply p-4 space-y-4; /* Reduced padding and spacing on very small screens if needed */
+    }
+  
+    .accuracy-label {
+      @apply text-sm; /* Reduced label text size on very small screens if needed */
+    }
+  
+    .accuracy-input, .accuracy-output {
+      @apply text-base; /* Reduced input text size on very small screens if needed */
+    }
+  }
+  
+  /* Responsive adjustments for larger screens (optional, max-w-lg and md:max-w-2xl on card already handles larger screens) */
+  @media (min-width: 1280px) { /* Example for large screens (lg breakpoint and above) */
+    .accuracy-card {
+      @apply max-w-3xl; /* Example of increasing max-width on very large screens */
+    }
+  }
+  
