@@ -2,7 +2,7 @@
 
 export const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
-  "http://localhost:4000/api"
+  "https://backend-production-1b74.up.railway.app/api"
 
 /**
  * GET: realiza una solicitud GET a API_BASE + endpoint
