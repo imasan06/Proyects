@@ -1,93 +1,57 @@
 // src/api/api.js
 
-export const API_BASE =
-  import.meta.env.VITE_API_BASE_URL ||
-  "http://localhost:4000/api"
+// 1. Toma la URL base sin slash final; en local apunta al host sólo,
+//    no incluye /api aquí para que los endpoints sean más flexibles.
+export const API_BASE = (
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ||
+  'http://localhost:4000'
+)
 
 /**
- * GET: realiza una solicitud GET a API_BASE + endpoint
- * @param {string} endpoint — p.ej. "/improvement/123"
- * @param {string|null} token — JWT si corresponde
+ * Helper para ejecutar fetch, con headers comunes y opcional credenciales.
  */
-export async function getData(endpoint, token = null) {
-  try {
-    const headers = {}
-    if (token) {
-      headers.Authorization = `Bearer ${token}`
-    }
+async function request(endpoint, { method, data = null, token = null } = {}) {
+  // aseguramos que endpoint empiece con slash
+  const url = `${API_BASE}${endpoint.startsWith('/') ? endpoint : '/' + endpoint}`
 
-    const response = await fetch(`${API_BASE}${endpoint}`, {
-      method: "GET",
-      headers,
-    })
+  const headers = {}
+  if (data) headers['Content-Type'] = 'application/json'
+  if (token) headers['Authorization'] = `Bearer ${token}`
 
-    if (!response.ok) {
-      throw new Error(`GET ${endpoint} failed: ${response.status}`)
-    }
+  const res = await fetch(url, {
+    method,
+    headers,
+    // para que el navegador envíe y acepte cookies/sesiones
+    credentials: 'include',
+    body: data ? JSON.stringify(data) : undefined,
+  })
 
-    return await response.json()
-  } catch (error) {
-    console.error("GET Error:", error)
-    throw error
+  if (!res.ok) {
+    const text = await res.text()
+    throw new Error(`${method} ${endpoint} failed (${res.status}): ${text}`)
   }
+
+  // si no hay cuerpo, retorna null
+  return res.status !== 204 ? res.json() : null
 }
 
 /**
- * POST: realiza una solicitud POST a API_BASE + endpoint
- * @param {string} endpoint — p.ej. "/auth/login"
- * @param {Object} data — payload JSON
- * @param {string|null} token — JWT si corresponde
+ * GET: /api/whatever
  */
-export async function postData(endpoint, data, token = null) {
-  try {
-    const headers = { "Content-Type": "application/json" }
-    if (token) {
-      headers.Authorization = `Bearer ${token}`
-    }
-
-    const response = await fetch(`${API_BASE}${endpoint}`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(data),
-    })
-
-    if (!response.ok) {
-      throw new Error(`POST ${endpoint} failed: ${response.status}`)
-    }
-
-    return await response.json()
-  } catch (error) {
-    console.error("POST Error:", error)
-    throw error
-  }
+export function getData(endpoint, token = null) {
+  return request(endpoint, { method: 'GET', token })
 }
 
 /**
- * PUT: realiza una solicitud PUT a API_BASE + endpoint
- * @param {string} endpoint — p.ej. "/users/123"
- * @param {Object} data — payload JSON
- * @param {string|null} token — JWT si corresponde
+ * POST: /api/whatever
  */
-export async function putData(endpoint, data, token = null) {
-  try {
-    const headers = { "Content-Type": "application/json" }
-    if (token) {
-      headers.Authorization = `Bearer ${token}`
-    }
+export function postData(endpoint, data, token = null) {
+  return request(endpoint, { method: 'POST', data, token })
+}
 
-    const response = await fetch(`${API_BASE}${endpoint}`, {
-      method: "PUT",
-      headers,
-      body: JSON.stringify(data),
-    })
-
-    if (!response.ok) {
-      throw new Error(`PUT ${endpoint} failed: ${response.status}`)
-    }
-
-    return await response.json()
-  } catch (error) {
-    console.error("PUT Error:", error)
-    throw error
-  }
+/**
+ * PUT: /api/whatever
+ */
+export function putData(endpoint, data, token = null) {
+  return request(endpoint, { method: 'PUT', data, token })
 }
