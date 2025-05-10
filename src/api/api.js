@@ -1,8 +1,7 @@
 // src/api/api.js
 // src/lib/api.js (por ejemplo)
 export const API_BASE = (
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ||
-  'http://localhost:4000'
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') 
 );
 
 /**
