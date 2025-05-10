@@ -1,17 +1,9 @@
 // src/api/api.js
-
-<<<<<<< HEAD
-// 1. Toma la URL base sin slash final; en local apunta al host sólo,
-//    no incluye /api aquí para que los endpoints sean más flexibles.
+// src/lib/api.js (por ejemplo)
 export const API_BASE = (
   import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ||
   'http://localhost:4000'
-)
-=======
-export const API_BASE =
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://backend-production-bf4a.up.railway.app"
->>>>>>> 940dc10d9788e479b748d5725e0f93c3b5c52894
+);
 
 /**
  * Helper para ejecutar fetch, con headers comunes y opcional credenciales.
